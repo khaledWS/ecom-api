@@ -2,11 +2,15 @@
 
 namespace App\Exceptions;
 
+use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -43,8 +47,36 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+        // dd(request()->is('api/*'));
         $this->reportable(function (Throwable $e) {
-            //
+            // if (request()->is('api/*')) {
+            //     return response()->json($e->__toString(), $e->status);
+            // }
+            // return response()->json($e->__toString(), $e->status);
         });
+        // $this->renderable(function (ValidationException $e, $request) {
+        //     if ($request->is('api/*')) {
+        //         $response = [
+        //             'message' => $e->getMessage(),
+        //             'status' => $e->status,
+        //             'errors' => $e->errors()
+        //         ];
+        //         return response()->json($response, $e->status);
+        //     }
+        // });
+
+        // $this->renderable(function (Throwable $e, $request) {
+        //     if (env('APP_DEBUG') == true){
+        //     if ($request->is('api/*')) {
+        //         if($e instanceof Exception){
+        //             // dd(['test']);
+        //             // return response()->json(['test'],500);
+        //             return response()->json($e->__toString(),500);
+        //         }
+        //         return response()->json($e->__toString(), $e->status);
+        //     }
+        //     return response()->json($e->__toString(), $e->status);
+        // }
+        // });
     }
 }
